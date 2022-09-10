@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "programmer": "arduino:avrisp",
-    "sketch": "ObstacleAvoidingRobot.ino",
-    "port": "COM4",
-    "output": "../ArduinoOutput"
-}
