@@ -1,5 +1,5 @@
 //The DIY Life
-//Michael Klements
+//Janis Rasins fork and refactoring from Michael Klements code
 //29 June 2020
 //Obstacle Avoiding Robot
 
@@ -25,7 +25,7 @@ Servo servoLook;                                  //Create an object to control 
 float timeOut = 2*(MAX_DIST+10)/100/340*1000000;    //Maximum time to wait for a return signal
 unsigned long lastTime;                             // Define timer
 bool isIrHight;                                     // Define Infrared state
-int turnDuration =  round(40000/(MOTOR_SPEED+TURN_SPEED)); // Calculate 90 deg turn time 
+int turnDurationTime =  round(40000/(MOTOR_SPEED+TURN_SPEED)); // Calculate 90 deg turn time 
 
 void setup() 
 {
@@ -55,25 +55,7 @@ void loop()
     delay(150);
   }
   stopMove();                                     //Stop the motors
-  int turnDir = checkDirection();                 //Check the left and right object distances and get the turning instruction
-  switch (turnDir)                                //Turn left, turn around or turn right depending on the instruction
-  {
-    case 0:                                       //Turn left
-      turnLeft (turnDuration / 1.75);
-      break;
-    case 1:                                       //Turn left
-      turnLeft (turnDuration);
-      break;
-    case 2:                                       //Turn right
-      turnRight (turnDuration / 1.75);
-      break;
-    case 3:                                       //Turn right
-      turnRight (turnDuration);
-      break;
-    case 4:                                       //Turn around
-      turnRight (turnDuration * 2);
-      break;
-  }
+  processTurnDirection(checkDirection());         //Check the left and right object distances and get the turning instruction
 }
 
 void accelerate()                                 //Function to accelerate the motors from 0 to full speed
@@ -214,4 +196,26 @@ int indexOfMaxValue(int dist[], int sizeOfArray) {
 		}
 	}
   return maxIndex;
+}
+
+void processTurnDirection(int turnDir) 
+{
+  switch (turnDir)                                //Turn left, turn around or turn right depending on the instruction
+  {
+    case 0:                                       //Turn left
+      turnLeft (turnDurationTime / 1.75);
+      break;
+    case 1:                                       //Turn left
+      turnLeft (turnDurationTime);
+      break;
+    case 2:                                       //Turn right
+      turnRight (turnDurationTime / 1.75);
+      break;
+    case 3:                                       //Turn right
+      turnRight (turnDurationTime);
+      break;
+    case 4:                                       //Turn around
+      turnRight (turnDurationTime * 2);
+      break;
+  }
 }
